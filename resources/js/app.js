@@ -1,6 +1,11 @@
 require('./bootstrap');
+
 window.Vue = require('vue');
 Vue.component('image-gallery', require('./components/ImageGallery').default);
+Vue.component('image-gallery-item', require('./components/ImageGalleryItem').default);
+
+import Toasted from 'vue-toasted';
+Vue.use(Toasted)
 
 var eventHub = new Vue();
 Vue.mixin({

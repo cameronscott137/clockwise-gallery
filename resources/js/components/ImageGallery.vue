@@ -116,26 +116,7 @@
         <div class="flex items-center">
             <div class="w-3/4 p-10 ml-auto">
                 <div class="container flex flex-wrap -mx-2">
-                    <div v-for="image in imageArray" :key='image.id' class="md:w-1/2 xl:w-1/3 px-2 mb-8">
-                        <a @click.prevent href="#" class="block rounded border border-gray-light hover:border-green">
-                            <img :src="image.image_url">
-                            <div class="">
-                                <div class="flex flex-wrap justify-between bg-gray-lighter p-2 text-xs uppercase">
-                                    <span class='font-futura'>
-                                        {{ image.print_method }}
-                                    </span>
-                                    <span class='font-futura'>
-                                        {{ image.num_colors }} Color
-                                    </span>
-                                </div>
-                                <div class="py-3 px-2">
-                                    <p class="mb-0 text-sm font-futura">
-                                        {{ image.name }}
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                    <image-gallery-item v-for="image in imageArray" :image="image" :key="image.id"></image-gallery-item>
                     <div v-if="imageArray.length == 0" class="text-center mx-auto">
                         <div class="border border-gray-light rounded py-6 px-12">
                             <h2 class="font-futura font-bold text-xl mb-3">Nothing in Our Gallery Matches Your Search</h2>
@@ -220,7 +201,7 @@ export default {
             this.selectedPrintMethod = null;
             this.selectedColorCount = null;
             this.updateImageList();
-        }
+        },
     },
     mounted() {
 
