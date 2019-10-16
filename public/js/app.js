@@ -1997,30 +1997,76 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['images'],
   data: function data() {
     return {
       domain: window.location.origin,
       imageArray: this.images,
-      selectedCategory: "hats",
+      selectedCategory: null,
       selectedPrintMethod: null,
       selectedColorCount: null
     };
   },
   methods: {
+    updateCategory: function updateCategory(category) {
+      if (this.selectedCategory == category) {
+        this.selectedCategory = null;
+      } else {
+        this.selectedCategory = category;
+      }
+
+      this.updateImageList();
+    },
+    updatePrintMethod: function updatePrintMethod(printMethod) {
+      if (this.selectedPrintMethod == printMethod) {
+        this.selectedPrintMethod = null;
+      } else {
+        this.selectedPrintMethod = printMethod;
+      }
+
+      this.updateImageList();
+    },
+    updateColorCount: function updateColorCount(color) {
+      if (this.selectedColorCount == color) {
+        this.selectedColorCount = null;
+      } else {
+        this.selectedColorCount = color;
+      }
+
+      this.updateImageList();
+    },
     updateImageList: function updateImageList() {
       var _this = this;
 
-      var searchString = this.buildUrl();
-      axios.post("".concat(searchString)).then(function (response) {
+      var searchString = this.buildSearchString();
+      axios.post("".concat(window.location.origin, "/search/?").concat(searchString)).then(function (response) {
         _this.imageArray = response.data;
-        window.history.pushState({}, '', searchString);
+        window.history.pushState({}, '', "".concat(window.location.origin, "/?").concat(searchString));
       })["catch"](function (error) {
         console.log(error);
       });
     },
-    buildUrl: function buildUrl() {
+    buildSearchString: function buildSearchString() {
       var string = "";
 
       if (this.selectedCategory) {
@@ -2035,11 +2081,13 @@ __webpack_require__.r(__webpack_exports__);
         string += "color_count=".concat(this.selectedColorCount, "&");
       }
 
-      if (string == '') {
-        return "".concat(window.origin, "/styles");
-      }
-
-      return "".concat(window.location.origin, "/search/?").concat(string);
+      return string;
+    },
+    clearSearch: function clearSearch() {
+      this.selectedCategory = null;
+      this.selectedPrintMethod = null;
+      this.selectedColorCount = null;
+      this.updateImageList();
     }
   },
   mounted: function mounted() {}
@@ -19650,9 +19698,19 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "w-1/4 bg-gray-lighter h-screen fixed p-6 overflow-scroll"
+        staticClass:
+          "w-1/4 bg-gray-lighter h-screen fixed pt-4 px-6 pb-6 overflow-scroll"
       },
       [
+        _c("div", { staticClass: "text-center mb-8" }, [
+          _c("a", { attrs: { href: "" + _vm.domain } }, [
+            _c("img", {
+              staticClass: "mx-auto w-16",
+              attrs: { src: _vm.domain + "/img/icon-logo.svg" }
+            })
+          ])
+        ]),
+        _vm._v(" "),
         _c("div", { staticClass: "mb-8" }, [
           _c("h3", { staticClass: "font-bold mb-2 font-futura" }, [
             _vm._v("Category")
@@ -19663,7 +19721,12 @@ var render = function() {
             {
               staticClass:
                 "bg-white border border-gray-light rounded p-4 mb-2 hover:bg-gray-lightest cursor-pointer",
-              on: { click: _vm.updateImageList }
+              class: [_vm.selectedCategory == "tees" ? "border-green" : ""],
+              on: {
+                click: function($event) {
+                  return _vm.updateCategory("tees")
+                }
+              }
             },
             [
               _c("span", { staticClass: "font-futura uppercase text-sm" }, [
@@ -19672,9 +19735,45 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._m(0),
+          _c(
+            "div",
+            {
+              staticClass:
+                "bg-white border border-gray-light rounded p-4 mb-2 hover:bg-gray-lightest cursor-pointer",
+              class: [_vm.selectedCategory == "hoodies" ? "border-green" : ""],
+              on: {
+                click: function($event) {
+                  return _vm.updateCategory("hoodies")
+                }
+              }
+            },
+            [
+              _c("span", { staticClass: "font-futura uppercase text-sm" }, [
+                _vm._v("\n                    Hoodies\n                ")
+              ])
+            ]
+          ),
           _vm._v(" "),
-          _vm._m(1)
+          _c(
+            "div",
+            {
+              staticClass:
+                "bg-white border border-gray-light rounded p-4 mb-2 hover:bg-gray-lightest cursor-pointer",
+              class: [_vm.selectedCategory == "hats" ? "border-green" : ""],
+              on: {
+                click: function($event) {
+                  return _vm.updateCategory("hats")
+                }
+              }
+            },
+            [
+              _c(
+                "span",
+                { staticClass: "font-futura font-normal uppercase text-sm" },
+                [_vm._v("\n                    Hats\n                ")]
+              )
+            ]
+          )
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "mb-8" }, [
@@ -19686,17 +19785,29 @@ var render = function() {
             "div",
             {
               staticClass:
-                "bg-white border border-gray-light rounded p-4 mb-2 flex flex-wrap items-center hover:bg-gray-lightest cursor-pointer"
+                "text-center bg-white border border-gray-light rounded p-4 mb-2 lg:flex lg:flex-wrap lg:items-center hover:bg-gray-lightest cursor-pointer",
+              class: [
+                _vm.selectedPrintMethod == "screenprinting"
+                  ? "border-green"
+                  : ""
+              ],
+              on: {
+                click: function($event) {
+                  return _vm.updatePrintMethod("screenprinting")
+                }
+              }
             },
             [
               _c("img", {
-                staticClass: "w-12 mr-3",
+                staticClass: "mx-auto w-12 lg:mr-3 lg:ml-0 mb-3 lg:mb-0",
                 attrs: { src: _vm.domain + "/img/icon-screenprinting.svg" }
               }),
               _vm._v(" "),
               _c(
                 "span",
-                { staticClass: "font-futura font-normal uppercase text-sm" },
+                {
+                  staticClass: "block font-futura font-normal uppercase text-sm"
+                },
                 [
                   _vm._v(
                     "\n                    Screenprinting\n                "
@@ -19710,19 +19821,29 @@ var render = function() {
             "div",
             {
               staticClass:
-                "bg-white border border-gray-light rounded p-4 mb-2 flex flex-wrap items-center hover:bg-gray-lightest cursor-pointer"
+                "text-center bg-white border border-gray-light rounded p-4 mb-2 lg:flex lg:flex-wrap lg:items-center hover:bg-gray-lightest cursor-pointer",
+              class: [
+                _vm.selectedPrintMethod == "embroidery" ? "border-green" : ""
+              ],
+              on: {
+                click: function($event) {
+                  return _vm.updatePrintMethod("embroidery")
+                }
+              }
             },
             [
-              _c("div", { staticClass: "w-12 mr-3" }, [
+              _c("div", { staticClass: "mx-auto w-12 lg:mr-3 lg:ml-0" }, [
                 _c("img", {
-                  staticClass: "h-10",
+                  staticClass: "mx-auto h-10 mb-3 lg:mb-0",
                   attrs: { src: _vm.domain + "/img/icon-embroidery.svg" }
                 })
               ]),
               _vm._v(" "),
               _c(
                 "span",
-                { staticClass: "font-futura font-normal uppercase text-sm" },
+                {
+                  staticClass: "block font-futura font-normal uppercase text-sm"
+                },
                 [_vm._v("\n                    Embroidery\n                ")]
               )
             ]
@@ -19732,24 +19853,272 @@ var render = function() {
             "div",
             {
               staticClass:
-                "bg-white border border-gray-light rounded p-4 mb-2 flex flex-wrap items-center hover:bg-gray-lightest cursor-pointer"
+                "text-center bg-white border border-gray-light rounded p-4 mb-2 lg:flex lg:flex-wrap lg:items-center hover:bg-gray-lightest cursor-pointer",
+              class: [
+                _vm.selectedPrintMethod == "digital" ? "border-green" : ""
+              ],
+              on: {
+                click: function($event) {
+                  return _vm.updatePrintMethod("digital")
+                }
+              }
             },
             [
               _c("img", {
-                staticClass: "w-12 mr-3",
+                staticClass: "mx-auto w-12 lg:mr-3 lg:ml-0 mb-3 lg:mb-0 w-12",
                 attrs: { src: _vm.domain + "/img/icon-digital.svg" }
               }),
               _vm._v(" "),
               _c(
                 "span",
-                { staticClass: "font-futura font-normal uppercase text-sm" },
+                {
+                  staticClass: "block font-futura font-normal uppercase text-sm"
+                },
                 [_vm._v("\n                    Digital\n                ")]
               )
             ]
           )
         ]),
         _vm._v(" "),
-        _vm._m(2)
+        _c("div", { staticClass: "mb-4" }, [
+          _c("h3", { staticClass: "font-bold mb-2 font-futura" }, [
+            _vm._v("Color Count")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "container flex flex-wrap -mx-1" }, [
+            _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer",
+                  class: [_vm.selectedColorCount == "1" ? "border-green" : ""],
+                  on: {
+                    click: function($event) {
+                      return _vm.updateColorCount("1")
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "font-futura font-normal uppercase text-sm"
+                    },
+                    [
+                      _vm._v(
+                        "\n                            1\n                        "
+                      )
+                    ]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer",
+                  class: [_vm.selectedColorCount == "2" ? "border-green" : ""],
+                  on: {
+                    click: function($event) {
+                      return _vm.updateColorCount("2")
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "font-futura font-normal uppercase text-sm"
+                    },
+                    [
+                      _vm._v(
+                        "\n                            2\n                        "
+                      )
+                    ]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer",
+                  class: [_vm.selectedColorCount == "3" ? "border-green" : ""],
+                  on: {
+                    click: function($event) {
+                      return _vm.updateColorCount("3")
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "font-futura font-normal uppercase text-sm"
+                    },
+                    [
+                      _vm._v(
+                        "\n                            3\n                        "
+                      )
+                    ]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer",
+                  class: [_vm.selectedColorCount == "4" ? "border-green" : ""],
+                  on: {
+                    click: function($event) {
+                      return _vm.updateColorCount("4")
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "font-futura font-normal uppercase text-sm"
+                    },
+                    [
+                      _vm._v(
+                        "\n                            4\n                        "
+                      )
+                    ]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer",
+                  class: [_vm.selectedColorCount == "5" ? "border-green" : ""],
+                  on: {
+                    click: function($event) {
+                      return _vm.updateColorCount("5")
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "font-futura font-normal uppercase text-sm"
+                    },
+                    [
+                      _vm._v(
+                        "\n                            5\n                        "
+                      )
+                    ]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer",
+                  class: [_vm.selectedColorCount == "6" ? "border-green" : ""],
+                  on: {
+                    click: function($event) {
+                      return _vm.updateColorCount("6")
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "font-futura font-normal uppercase text-sm"
+                    },
+                    [
+                      _vm._v(
+                        "\n                            6\n                        "
+                      )
+                    ]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer",
+                  class: [_vm.selectedColorCount == "7" ? "border-green" : ""],
+                  on: {
+                    click: function($event) {
+                      return _vm.updateColorCount("7")
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "font-futura font-normal uppercase text-sm"
+                    },
+                    [
+                      _vm._v(
+                        "\n                            7\n                        "
+                      )
+                    ]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer",
+                  class: [_vm.selectedColorCount == "8" ? "border-green" : ""],
+                  on: {
+                    click: function($event) {
+                      return _vm.updateColorCount("8")
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "font-futura font-normal uppercase text-sm"
+                    },
+                    [
+                      _vm._v(
+                        "\n                            8\n                        "
+                      )
+                    ]
+                  )
+                ]
+              )
+            ])
+          ])
+        ])
       ]
     ),
     _vm._v(" "),
@@ -19758,30 +20127,28 @@ var render = function() {
         _c(
           "div",
           { staticClass: "container flex flex-wrap -mx-2" },
-          _vm._l(_vm.imageArray, function(image) {
-            return _c(
-              "div",
-              { key: image.id, staticClass: "w-1/2 px-2 mb-8" },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "hover:bg-green-500",
-                    attrs: { href: _vm.domain + "/images/" + image.id }
-                  },
-                  [
-                    _c("img", {
-                      staticClass: "rounded-t",
-                      attrs: { src: image.image_url }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "border-gray-light border-l border-r border-b rounded-b"
-                      },
-                      [
+          [
+            _vm._l(_vm.imageArray, function(image) {
+              return _c(
+                "div",
+                { key: image.id, staticClass: "md:w-1/2 xl:w-1/3 px-2 mb-8" },
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass:
+                        "block rounded border border-gray-light hover:border-green",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                        }
+                      }
+                    },
+                    [
+                      _c("img", { attrs: { src: image.image_url } }),
+                      _vm._v(" "),
+                      _c("div", {}, [
                         _c(
                           "div",
                           {
@@ -19816,237 +20183,78 @@ var render = function() {
                             )
                           ])
                         ])
-                      ]
-                    )
-                  ]
-                )
-              ]
-            )
-          }),
-          0
+                      ])
+                    ]
+                  )
+                ]
+              )
+            }),
+            _vm._v(" "),
+            _vm.imageArray.length == 0
+              ? _c("div", { staticClass: "text-center mx-auto" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "border border-gray-light rounded py-6 px-12"
+                    },
+                    [
+                      _c(
+                        "h2",
+                        { staticClass: "font-futura font-bold text-xl mb-3" },
+                        [_vm._v("Nothing in Our Gallery Matches Your Search")]
+                      ),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "text-sm mb-6" }, [
+                        _vm._v("That doesn't mean we can't make it, though.")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass:
+                            "font-futura font-bold inline-block bg-green text-white px-6 py-3 rounded mb-2",
+                          attrs: {
+                            href: "https://clockwise.io/contact",
+                            target: "_blank"
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                            Tell Us What You Need\n                        "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "block text-sm text-green",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.clearSearch($event)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                            Or search for something else\n                        "
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                ])
+              : _vm._e()
+          ],
+          2
         )
       ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "bg-white border border-gray-light rounded p-4 mb-2 hover:bg-gray-lightest cursor-pointer"
-      },
-      [
-        _c("span", { staticClass: "font-futura uppercase text-sm" }, [
-          _vm._v("\n                    Hoodies\n                ")
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "bg-white border border-gray-light rounded p-4 mb-2 hover:bg-gray-lightest cursor-pointer"
-      },
-      [
-        _c(
-          "span",
-          { staticClass: "font-futura font-normal uppercase text-sm" },
-          [_vm._v("\n                    Hats\n                ")]
-        )
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mb-4" }, [
-      _c("h3", { staticClass: "font-bold mb-2 font-futura" }, [
-        _vm._v("Color Count")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "container flex flex-wrap -mx-1" }, [
-        _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer"
-            },
-            [
-              _c(
-                "span",
-                { staticClass: "font-futura font-normal uppercase text-sm" },
-                [
-                  _vm._v(
-                    "\n                            1\n                        "
-                  )
-                ]
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer"
-            },
-            [
-              _c(
-                "span",
-                { staticClass: "font-futura font-normal uppercase text-sm" },
-                [
-                  _vm._v(
-                    "\n                            2\n                        "
-                  )
-                ]
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer"
-            },
-            [
-              _c(
-                "span",
-                { staticClass: "font-futura font-normal uppercase text-sm" },
-                [
-                  _vm._v(
-                    "\n                            3\n                        "
-                  )
-                ]
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer"
-            },
-            [
-              _c(
-                "span",
-                { staticClass: "font-futura font-normal uppercase text-sm" },
-                [
-                  _vm._v(
-                    "\n                            4\n                        "
-                  )
-                ]
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer"
-            },
-            [
-              _c(
-                "span",
-                { staticClass: "font-futura font-normal uppercase text-sm" },
-                [
-                  _vm._v(
-                    "\n                            5\n                        "
-                  )
-                ]
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer"
-            },
-            [
-              _c(
-                "span",
-                { staticClass: "font-futura font-normal uppercase text-sm" },
-                [
-                  _vm._v(
-                    "\n                            6\n                        "
-                  )
-                ]
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer"
-            },
-            [
-              _c(
-                "span",
-                { staticClass: "font-futura font-normal uppercase text-sm" },
-                [
-                  _vm._v(
-                    "\n                            7\n                        "
-                  )
-                ]
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer"
-            },
-            [
-              _c(
-                "span",
-                { staticClass: "font-futura font-normal uppercase text-sm" },
-                [
-                  _vm._v(
-                    "\n                            8\n                        "
-                  )
-                ]
-              )
-            ]
-          )
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
