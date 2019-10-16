@@ -1980,14 +1980,69 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['images'],
   data: function data() {
     return {
       domain: window.location.origin,
-      imageArray: this.images
+      imageArray: this.images,
+      selectedCategory: "hats",
+      selectedPrintMethod: null,
+      selectedColorCount: null
     };
-  }
+  },
+  methods: {
+    updateImageList: function updateImageList() {
+      var _this = this;
+
+      var searchString = this.buildUrl();
+      axios.post("".concat(searchString)).then(function (response) {
+        _this.imageArray = response.data;
+        window.history.pushState({}, '', searchString);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    buildUrl: function buildUrl() {
+      var string = "";
+
+      if (this.selectedCategory) {
+        string += "category=".concat(this.selectedCategory, "&");
+      }
+
+      if (this.selectedPrintMethod) {
+        string += "print_method=".concat(this.selectedPrintMethod, "&");
+      }
+
+      if (this.selectedColorCount) {
+        string += "color_count=".concat(this.selectedColorCount, "&");
+      }
+
+      if (string == '') {
+        return "".concat(window.origin, "/styles");
+      }
+
+      return "".concat(window.location.origin, "/search/?").concat(string);
+    }
+  },
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -19592,7 +19647,111 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "antialiased" }, [
-    _vm._m(0),
+    _c(
+      "div",
+      {
+        staticClass: "w-1/4 bg-gray-lighter h-screen fixed p-6 overflow-scroll"
+      },
+      [
+        _c("div", { staticClass: "mb-8" }, [
+          _c("h3", { staticClass: "font-bold mb-2 font-futura" }, [
+            _vm._v("Category")
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "bg-white border border-gray-light rounded p-4 mb-2 hover:bg-gray-lightest cursor-pointer",
+              on: { click: _vm.updateImageList }
+            },
+            [
+              _c("span", { staticClass: "font-futura uppercase text-sm" }, [
+                _vm._v("\n                    Tees\n                ")
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._m(1)
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mb-8" }, [
+          _c("h3", { staticClass: "font-bold mb-2 font-futura" }, [
+            _vm._v("Print Method")
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "bg-white border border-gray-light rounded p-4 mb-2 flex flex-wrap items-center hover:bg-gray-lightest cursor-pointer"
+            },
+            [
+              _c("img", {
+                staticClass: "w-12 mr-3",
+                attrs: { src: _vm.domain + "/img/icon-screenprinting.svg" }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                { staticClass: "font-futura font-normal uppercase text-sm" },
+                [
+                  _vm._v(
+                    "\n                    Screenprinting\n                "
+                  )
+                ]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "bg-white border border-gray-light rounded p-4 mb-2 flex flex-wrap items-center hover:bg-gray-lightest cursor-pointer"
+            },
+            [
+              _c("div", { staticClass: "w-12 mr-3" }, [
+                _c("img", {
+                  staticClass: "h-10",
+                  attrs: { src: _vm.domain + "/img/icon-embroidery.svg" }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "span",
+                { staticClass: "font-futura font-normal uppercase text-sm" },
+                [_vm._v("\n                    Embroidery\n                ")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "bg-white border border-gray-light rounded p-4 mb-2 flex flex-wrap items-center hover:bg-gray-lightest cursor-pointer"
+            },
+            [
+              _c("img", {
+                staticClass: "w-12 mr-3",
+                attrs: { src: _vm.domain + "/img/icon-digital.svg" }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                { staticClass: "font-futura font-normal uppercase text-sm" },
+                [_vm._v("\n                    Digital\n                ")]
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _vm._m(2)
+      ]
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "flex items-center" }, [
       _c("div", { staticClass: "w-3/4 p-10 ml-auto" }, [
@@ -19611,20 +19770,52 @@ var render = function() {
                     attrs: { href: _vm.domain + "/images/" + image.id }
                   },
                   [
-                    _c("img", { attrs: { src: image.image_url } }),
+                    _c("img", {
+                      staticClass: "rounded-t",
+                      attrs: { src: image.image_url }
+                    }),
                     _vm._v(" "),
                     _c(
                       "div",
                       {
                         staticClass:
-                          "border-gray-light border-l border-r border-b p-2"
+                          "border-gray-light border-l border-r border-b rounded-b"
                       },
                       [
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(image.name) +
-                            "\n                        "
-                        )
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "flex flex-wrap justify-between bg-gray-lighter p-2 text-xs uppercase"
+                          },
+                          [
+                            _c("span", { staticClass: "font-futura" }, [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(image.print_method) +
+                                  "\n                                "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "font-futura" }, [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(image.num_colors) +
+                                  " Color\n                                "
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "py-3 px-2" }, [
+                          _c("p", { staticClass: "mb-0 text-sm font-futura" }, [
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(image.name) +
+                                "\n                                "
+                            )
+                          ])
+                        ])
                       ]
                     )
                   ]
@@ -19645,61 +19836,52 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "div",
-      { staticClass: "w-1/4 bg-gray-lighter h-screen fixed p-6" },
+      {
+        staticClass:
+          "bg-white border border-gray-light rounded p-4 mb-2 hover:bg-gray-lightest cursor-pointer"
+      },
       [
-        _c("div", { staticClass: "mb-8" }, [
-          _c("h3", { staticClass: "font-bold mb-2 font-futura" }, [
-            _vm._v("Category")
-          ]),
-          _vm._v(" "),
+        _c("span", { staticClass: "font-futura uppercase text-sm" }, [
+          _vm._v("\n                    Hoodies\n                ")
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "bg-white border border-gray-light rounded p-4 mb-2 hover:bg-gray-lightest cursor-pointer"
+      },
+      [
+        _c(
+          "span",
+          { staticClass: "font-futura font-normal uppercase text-sm" },
+          [_vm._v("\n                    Hats\n                ")]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mb-4" }, [
+      _c("h3", { staticClass: "font-bold mb-2 font-futura" }, [
+        _vm._v("Color Count")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "container flex flex-wrap -mx-1" }, [
+        _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
           _c(
             "div",
             {
-              staticClass: "bg-white border border-gray-light rounded p-4 mb-2"
-            },
-            [
-              _c("span", { staticClass: "font-futura uppercase text-sm" }, [
-                _vm._v("\n                    Tees\n                ")
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "bg-white border border-gray-light rounded p-4 mb-2"
-            },
-            [
-              _c("span", { staticClass: "font-futura uppercase text-sm" }, [
-                _vm._v("\n                    Hoodies\n                ")
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "bg-white border border-gray-light rounded p-4 mb-2"
-            },
-            [
-              _c(
-                "span",
-                { staticClass: "font-futura font-normal uppercase text-sm" },
-                [_vm._v("\n                    Hats\n                ")]
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "mb-8" }, [
-          _c("h3", { staticClass: "font-bold mb-2 font-futura" }, [
-            _vm._v("Print Method")
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "bg-white border border-gray-light rounded p-4 mb-2"
+              staticClass:
+                "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer"
             },
             [
               _c(
@@ -19707,236 +19889,162 @@ var staticRenderFns = [
                 { staticClass: "font-futura font-normal uppercase text-sm" },
                 [
                   _vm._v(
-                    "\n                    Screenprinting\n                "
+                    "\n                            1\n                        "
                   )
                 ]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "bg-white border border-gray-light rounded p-4 mb-2"
-            },
-            [
-              _c(
-                "span",
-                { staticClass: "font-futura font-normal uppercase text-sm" },
-                [_vm._v("\n                    Embroidery\n                ")]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass:
-                "bg-white border border-gray-light rounded p-4 mb-2 hover:bg-gray-100 cursor-pointer"
-            },
-            [
-              _c(
-                "span",
-                { staticClass: "font-futura font-normal uppercase text-sm" },
-                [_vm._v("\n                    Digital\n                ")]
               )
             ]
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "mb-4" }, [
-          _c("h3", { staticClass: "font-bold mb-2 font-futura" }, [
-            _vm._v("Color Count")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "container flex flex-wrap -mx-1" }, [
-            _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+        _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer"
+            },
+            [
               _c(
-                "div",
-                {
-                  staticClass:
-                    "bg-white border border-gray-light rounded p-4 text-center"
-                },
+                "span",
+                { staticClass: "font-futura font-normal uppercase text-sm" },
                 [
-                  _c(
-                    "span",
-                    {
-                      staticClass: "font-futura font-normal uppercase text-sm"
-                    },
-                    [
-                      _vm._v(
-                        "\n                            1\n                        "
-                      )
-                    ]
+                  _vm._v(
+                    "\n                            2\n                        "
                   )
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer"
+            },
+            [
               _c(
-                "div",
-                {
-                  staticClass:
-                    "bg-white border border-gray-light rounded p-4 text-center"
-                },
+                "span",
+                { staticClass: "font-futura font-normal uppercase text-sm" },
                 [
-                  _c(
-                    "span",
-                    {
-                      staticClass: "font-futura font-normal uppercase text-sm"
-                    },
-                    [
-                      _vm._v(
-                        "\n                            2\n                        "
-                      )
-                    ]
+                  _vm._v(
+                    "\n                            3\n                        "
                   )
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer"
+            },
+            [
               _c(
-                "div",
-                {
-                  staticClass:
-                    "bg-white border border-gray-light rounded p-4 text-center"
-                },
+                "span",
+                { staticClass: "font-futura font-normal uppercase text-sm" },
                 [
-                  _c(
-                    "span",
-                    {
-                      staticClass: "font-futura font-normal uppercase text-sm"
-                    },
-                    [
-                      _vm._v(
-                        "\n                            3\n                        "
-                      )
-                    ]
+                  _vm._v(
+                    "\n                            4\n                        "
                   )
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer"
+            },
+            [
               _c(
-                "div",
-                {
-                  staticClass:
-                    "bg-white border border-gray-light rounded p-4 text-center"
-                },
+                "span",
+                { staticClass: "font-futura font-normal uppercase text-sm" },
                 [
-                  _c(
-                    "span",
-                    {
-                      staticClass: "font-futura font-normal uppercase text-sm"
-                    },
-                    [
-                      _vm._v(
-                        "\n                            4\n                        "
-                      )
-                    ]
+                  _vm._v(
+                    "\n                            5\n                        "
                   )
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer"
+            },
+            [
               _c(
-                "div",
-                {
-                  staticClass:
-                    "bg-white border border-gray-light rounded p-4 text-center cursor-pointer hover:bg-gray-100"
-                },
+                "span",
+                { staticClass: "font-futura font-normal uppercase text-sm" },
                 [
-                  _c(
-                    "span",
-                    {
-                      staticClass: "font-futura font-normal uppercase text-sm"
-                    },
-                    [
-                      _vm._v(
-                        "\n                            5\n                        "
-                      )
-                    ]
+                  _vm._v(
+                    "\n                            6\n                        "
                   )
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer"
+            },
+            [
               _c(
-                "div",
-                {
-                  staticClass:
-                    "bg-white border border-gray-light rounded p-4 text-center cursor-pointer hover:bg-gray-100"
-                },
+                "span",
+                { staticClass: "font-futura font-normal uppercase text-sm" },
                 [
-                  _c(
-                    "span",
-                    {
-                      staticClass: "font-futura font-normal uppercase text-sm"
-                    },
-                    [
-                      _vm._v(
-                        "\n                            6\n                        "
-                      )
-                    ]
+                  _vm._v(
+                    "\n                            7\n                        "
                   )
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer"
+            },
+            [
               _c(
-                "div",
-                {
-                  staticClass:
-                    "bg-white border border-gray-light rounded p-4 text-center cursor-pointer hover:bg-gray-100"
-                },
+                "span",
+                { staticClass: "font-futura font-normal uppercase text-sm" },
                 [
-                  _c(
-                    "span",
-                    {
-                      staticClass: "font-futura font-normal uppercase text-sm"
-                    },
-                    [
-                      _vm._v(
-                        "\n                            7\n                        "
-                      )
-                    ]
+                  _vm._v(
+                    "\n                            8\n                        "
                   )
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "w-1/4 px-1 mb-2" }, [
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "bg-white border border-gray-light rounded p-4 text-center cursor-pointer hover:bg-gray-100"
-                },
-                [
-                  _c(
-                    "span",
-                    {
-                      staticClass: "font-futura font-normal uppercase text-sm"
-                    },
-                    [
-                      _vm._v(
-                        "\n                            8\n                        "
-                      )
-                    ]
-                  )
-                ]
-              )
-            ])
-          ])
+            ]
+          )
         ])
-      ]
-    )
+      ])
+    ])
   }
 ]
 render._withStripped = true

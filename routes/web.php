@@ -17,5 +17,6 @@
 // Auth::routes();
 
 Route::get('/', 'ImageController@index')->name('galleryIndex');
+Route::post('/search', 'ImageController@search')->name('gallerySearch');
 Route::get('/images/{galleryImage}', 'ImageController@show')->name('galleryShow');
 

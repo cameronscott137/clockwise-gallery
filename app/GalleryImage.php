@@ -9,8 +9,28 @@ class GalleryImage extends Model
 {
     use SoftDeletes;
 
-    public function scopeWithFilters($query, $filters)
+    public function scopeWithPrintMethod($query, $printMethod)
     {
-        return $query;
+        if (is_null($printMethod)) {
+            return $query;
+        }
+        $query->where('print_method', ucfirst($printMethod));
+    }
+
+    public function scopeWithColorCount($query, $colorCount)
+    {
+        if (is_null($colorCount)) {
+            return $query;
+        }
+        $query->where('num_colors', $colorCount);
+    }
+
+    public function scopeWithCategory($query, $category)
+    {
+        // dd($category);
+        if (is_null($category)) {
+            return $query;
+        }
+        $query->where('category', ucfirst($category));
     }
 }
