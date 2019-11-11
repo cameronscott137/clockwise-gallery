@@ -1,121 +1,98 @@
 <template>
-    <main class="antialiased">
-        <div class="w-1/4 bg-gray-lighter h-screen fixed pt-4 px-6 pb-6 overflow-scroll">
+    <main>
 
-            <div class="text-center mb-8">
-                <a :href="`${domain}`">
-                    <img class="mx-auto w-16" :src="`${domain}/img/icon-logo.svg`">
+        <!-- <div class="w-full fixed z-50 py-2 px-4 bg-white shadow">
+
+            <div class="container mx-auto flex flex-wrap items-center ">
+                <a :href="`${domain}`" class="block mr-10">
+                    <img class="w-12" :src="`${domain}/img/icon-logo.svg`">
                 </a>
-            </div>
 
-            <div class="mb-8">
-                <h3 class='font-bold mb-2 font-futura'>Category</h3>
-                <div class='bg-white border border-gray-light rounded p-4 mb-2 hover:bg-gray-lightest cursor-pointer' @click="updateCategory('tees')" :class="[selectedCategory == 'tees' ? 'border-green' : '']">
-                    <span class="font-futura uppercase text-sm">
-                        Tees
-                    </span>
+                <div class="relative mr-8" style="width: 200px" v-on-clickaway="closeCategories">
+                    <a class="font-futura flex text-sm items-center justify-between w-full uppercase p-2 border-b border-gray-light" href="#" @click.prevent="categoriesVisible = !categoriesVisible">
+                        {{ selectedCategory }}
+                        <svg class="block ml-5" width="9" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 5L8 1H1z" fill="#404040" stroke="#404040" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                    <div class="w-full bg-white absolute mt-2 shadow-lg" v-if="categoriesVisible">
+                        <div class='border-b border-gray-light p-4 hover:bg-gray-lightest cursor-pointer' @click="updateCategory('tees')" :class="[selectedCategory == 'tees' ? 'border-green' : '']">
+                            <span class="font-futura uppercase text-sm">
+                                Tees
+                            </span>
+                        </div>
+                        <div class='border-b border-gray-light p-4 hover:bg-gray-lightest cursor-pointer' @click="updateCategory('hoodies')" :class="[selectedCategory == 'hoodies' ? 'border-green' : '']">
+                            <span class="font-futura uppercase text-sm">
+                                Hoodies
+                            </span>
+                        </div>
+                        <div class='border-b border-gray-light p-4 hover:bg-gray-lightest cursor-pointer' @click="updateCategory('hats')" :class="[selectedCategory == 'hats' ? 'border-green' : '']">
+                            <span class="font-futura font-normal uppercase text-sm">
+                                Hats
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                <div class='bg-white border border-gray-light rounded p-4 mb-2 hover:bg-gray-lightest cursor-pointer' @click="updateCategory('hoodies')" :class="[selectedCategory == 'hoodies' ? 'border-green' : '']">
-                    <span class="font-futura uppercase text-sm">
-                        Hoodies
-                    </span>
-                </div>
-                <div class='bg-white border border-gray-light rounded p-4 mb-2 hover:bg-gray-lightest cursor-pointer' @click="updateCategory('hats')" :class="[selectedCategory == 'hats' ? 'border-green' : '']">
-                    <span class="font-futura font-normal uppercase text-sm">
-                        Hats
-                    </span>
-                </div>
-            </div>
-            <div class="mb-8">
-                <h3 class='font-bold mb-2 font-futura'>Print Method</h3>
-                <div class='text-center bg-white border border-gray-light rounded p-4 mb-2 lg:flex lg:flex-wrap lg:items-center hover:bg-gray-lightest cursor-pointer' @click="updatePrintMethod('screenprinting')" :class="[selectedPrintMethod == 'screenprinting' ? 'border-green' : '']">
-                    <img class="mx-auto w-12 lg:mr-3 lg:ml-0 mb-3 lg:mb-0" :src="`${domain}/img/icon-screenprinting.svg`">
-                    <span class="block font-futura font-normal uppercase text-sm">
-                        Screenprinting
-                    </span>
-                </div>
-                <div class='text-center bg-white border border-gray-light rounded p-4 mb-2 lg:flex lg:flex-wrap lg:items-center hover:bg-gray-lightest cursor-pointer' @click="updatePrintMethod('embroidery')" :class="[selectedPrintMethod == 'embroidery' ? 'border-green' : '']">
-                    <div class="mx-auto w-12 lg:mr-3 lg:ml-0">
-                        <img class="mx-auto h-10 mb-3 lg:mb-0" :src="`${domain}/img/icon-embroidery.svg`">
-                    </div>
-                    <span class="block font-futura font-normal uppercase text-sm">
-                        Embroidery
-                    </span>
-                </div>
-                <div class='text-center bg-white border border-gray-light rounded p-4 mb-2 lg:flex lg:flex-wrap lg:items-center hover:bg-gray-lightest cursor-pointer' @click="updatePrintMethod('digital')" :class="[selectedPrintMethod == 'digital' ? 'border-green' : '']">
-                    <img class="mx-auto w-12 lg:mr-3 lg:ml-0 mb-3 lg:mb-0 w-12" :src="`${domain}/img/icon-digital.svg`">
-                    <span class="block font-futura font-normal uppercase text-sm">
-                        Digital
-                    </span>
-                </div>
-            </div>
-            <div class="mb-4">
-                <h3 class='font-bold mb-2 font-futura'>Color Count</h3>
-                <div class="container flex flex-wrap -mx-1">
-                    <div class='w-1/4 px-1 mb-2'>
-                        <div class="bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer" @click="updateColorCount('1')" :class="[selectedColorCount == '1' ? 'border-green' : '']">
-                            <span class="font-futura font-normal uppercase text-sm">
-                                1
-                            </span>
-                        </div>
-                    </div>
-                    <div class='w-1/4 px-1 mb-2'>
-                        <div class="bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer" @click="updateColorCount('2')"  :class="[selectedColorCount == '2' ? 'border-green' : '']">
-                            <span class="font-futura font-normal uppercase text-sm">
-                                2
-                            </span>
-                        </div>
-                    </div>
-                    <div class='w-1/4 px-1 mb-2'>
-                        <div class="bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer" @click="updateColorCount('3')"  :class="[selectedColorCount == '3' ? 'border-green' : '']">
-                            <span class="font-futura font-normal uppercase text-sm">
-                                3
-                            </span>
-                        </div>
-                    </div>
-                    <div class='w-1/4 px-1 mb-2'>
-                        <div class="bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer" @click="updateColorCount('4')"  :class="[selectedColorCount == '4' ? 'border-green' : '']">
-                            <span class="font-futura font-normal uppercase text-sm">
-                                4
-                            </span>
-                        </div>
-                    </div>
-                    <div class='w-1/4 px-1 mb-2'>
-                        <div class="bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer" @click="updateColorCount('5')"  :class="[selectedColorCount == '5' ? 'border-green' : '']">
-                            <span class="font-futura font-normal uppercase text-sm">
-                                5
-                            </span>
-                        </div>
-                    </div>
-                    <div class='w-1/4 px-1 mb-2'>
-                        <div class="bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer" @click="updateColorCount('6')"  :class="[selectedColorCount == '6' ? 'border-green' : '']">
-                            <span class="font-futura font-normal uppercase text-sm">
-                                6
-                            </span>
-                        </div>
-                    </div>
-                    <div class='w-1/4 px-1 mb-2'>
-                        <div class="bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer" @click="updateColorCount('7')"  :class="[selectedColorCount == '7' ? 'border-green' : '']">
-                            <span class="font-futura font-normal uppercase text-sm">
-                                7
-                            </span>
-                        </div>
-                    </div>
-                    <div class='w-1/4 px-1 mb-2'>
-                        <div class="bg-white border border-gray-light rounded p-4 text-center hover:bg-gray-lightest cursor-pointer" @click="updateColorCount('8')"  :class="[selectedColorCount == '8' ? 'border-green' : '']">
-                            <span class="font-futura font-normal uppercase text-sm">
-                                8
-                            </span>
-                        </div>
-                    </div>
 
+
+                <div class="relative" style="width: 200px" v-on-clickaway="closePrintMethods">
+                    <a class="font-futura text-sm flex items-center justify-between w-full uppercase p-2 border-b border-gray-light" href="#" @click.prevent="printMethodsVisible = !printMethodsVisible">
+                        {{ selectedPrintMethod }}
+                        <svg class="block ml-5" width="9" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 5L8 1H1z" fill="#404040" stroke="#404040" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                    <div class="w-full bg-white absolute mt-2 shadow-lg" v-if="printMethodsVisible">
+                        <div class='text-center bg-white border-b border-gray-light p-4 lg:flex lg:flex-wrap lg:items-center hover:bg-gray-lightest cursor-pointer' @click="updatePrintMethod('screenprinting')" :class="[selectedPrintMethod == 'screenprinting' ? 'bg-gray-lightest border-green' : '']">
+                            <img class="mx-auto w-10 lg:mr-3 lg:ml-0 mb-3 lg:mb-0" :src="`${domain}/img/icon-screenprinting.svg`">
+                            <span class="block font-futura font-normal uppercase text-sm">
+                                Screenprinting
+                            </span>
+                        </div>
+                        <div class='text-center bg-white border-b border-gray-light p-4 lg:flex lg:flex-wrap lg:items-center hover:bg-gray-lightest cursor-pointer' @click="updatePrintMethod('embroidery')" :class="[selectedPrintMethod == 'embroidery' ? 'bg-gray-lightest border-green' : '']">
+                            <div class="mx-auto w-10 lg:mr-3 lg:ml-0">
+                                <img class="mx-auto h-10 mb-3 lg:mb-0" :src="`${domain}/img/icon-embroidery.svg`">
+                            </div>
+                            <span class="block font-futura font-normal uppercase text-sm">
+                                Embroidery
+                            </span>
+                        </div>
+                        <div class='text-center bg-white p-4 lg:flex lg:flex-wrap lg:items-center hover:bg-gray-lightest cursor-pointer' @click="updatePrintMethod('digital')" :class="[selectedPrintMethod == 'digital' ? 'bg-gray-lightest border-green' : '']">
+                            <img class="mx-auto w-8 lg:mr-3 lg:ml-0 mb-3 lg:mb-0 w-12" :src="`${domain}/img/icon-digital.svg`">
+                            <span class="block font-futura font-normal uppercase text-sm">
+                                Digital
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mr-8">
+                    <h3 class='font-bold mb-2 font-futura'>Print Method</h3>
+                    <div class='text-center bg-white border border-gray-light rounded p-4 mb-2 lg:flex lg:flex-wrap lg:items-center hover:bg-gray-lightest cursor-pointer' @click="updatePrintMethod('screenprinting')" :class="[selectedPrintMethod == 'screenprinting' ? 'border-green' : '']">
+                        <img class="mx-auto w-12 lg:mr-3 lg:ml-0 mb-3 lg:mb-0" :src="`${domain}/img/icon-screenprinting.svg`">
+                        <span class="block font-futura font-normal uppercase text-sm">
+                            Screenprinting
+                        </span>
+                    </div>
+                    <div class='text-center bg-white border border-gray-light rounded p-4 mb-2 lg:flex lg:flex-wrap lg:items-center hover:bg-gray-lightest cursor-pointer' @click="updatePrintMethod('embroidery')" :class="[selectedPrintMethod == 'embroidery' ? 'border-green' : '']">
+                        <div class="mx-auto w-12 lg:mr-3 lg:ml-0">
+                            <img class="mx-auto h-10 mb-3 lg:mb-0" :src="`${domain}/img/icon-embroidery.svg`">
+                        </div>
+                        <span class="block font-futura font-normal uppercase text-sm">
+                            Embroidery
+                        </span>
+                    </div>
+                    <div class='text-center bg-white border border-gray-light rounded p-4 mb-2 lg:flex lg:flex-wrap lg:items-center hover:bg-gray-lightest cursor-pointer' @click="updatePrintMethod('digital')" :class="[selectedPrintMethod == 'digital' ? 'border-green' : '']">
+                        <img class="mx-auto w-12 lg:mr-3 lg:ml-0 mb-3 lg:mb-0 w-12" :src="`${domain}/img/icon-digital.svg`">
+                        <span class="block font-futura font-normal uppercase text-sm">
+                            Digital
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="flex items-center">
-            <div class="w-3/4 p-10 ml-auto">
-                <div class="container flex flex-wrap -mx-2">
+            <div class="container mx-auto px-4">
+
+                <gallery-search class="mt-12 mb-10"></gallery-search>
+
+                <div class=" flex flex-wrap -mx-2">
                     <image-gallery-item v-for="image in imageArray" :image="image" :key="image.id"></image-gallery-item>
                     <div v-if="imageArray.length == 0" class="text-center mx-auto">
                         <div class="border border-gray-light rounded py-6 px-12">
@@ -136,75 +113,73 @@
 </template>
 
 <script>
+import { mixin as clickaway } from 'vue-clickaway';
 export default {
+    mixins: [clickaway],
     props: ['images'],
     data() {
         return {
             domain: window.location.origin,
             imageArray: this.images,
-            selectedCategory: null,
-            selectedPrintMethod: null,
-            selectedColorCount: null,
+            selectedCategory: "all styles",
+            categoriesVisible: false,
+            selectedPrintMethod: "all print methods",
+            printMethodsVisible: false,
         }
     },
     methods: {
-        updateCategory(category) {
-            if (this.selectedCategory == category) {
-                this.selectedCategory = null;
-            } else {
-                this.selectedCategory = category;
-            }
-            this.updateImageList();
-        },
-        updatePrintMethod(printMethod) {
-            if (this.selectedPrintMethod == printMethod) {
-                this.selectedPrintMethod = null;
-            } else {
-                this.selectedPrintMethod = printMethod;
-            }
-            this.updateImageList();
-        },
-        updateColorCount(color) {
-            if (this.selectedColorCount == color) {
-                this.selectedColorCount = null;
-            } else {
-                this.selectedColorCount = color;
-            }
-            this.updateImageList();
-        },
-        updateImageList() {
-            var searchString = this.buildSearchString();
-            axios.post(`${window.location.origin}/search/?${searchString}`)
+        // updateCategory(category) {
+        //     if (this.selectedCategory == category) {
+        //         this.selectedCategory = "all styles";
+        //     } else {
+        //         this.selectedCategory = category;
+        //     }
+        //     this.updateImageList();
+        // },
+        // updatePrintMethod(printMethod) {
+        //     if (this.selectedPrintMethod == printMethod) {
+        //         this.selectedPrintMethod = "all print methods";
+        //     } else {
+        //         this.selectedPrintMethod = printMethod;
+        //     }
+        //     this.updateImageList();
+        // },
+        updateImageList(term) {
+            // var searchString = this.buildSearchString();
+            // debugger;
+            axios.post(`${window.location.origin}/search/?search=${term}`)
                 .then(response => {
                     this.imageArray = response.data;
-                    window.history.pushState({}, '', `${window.location.origin}/?${searchString}`);
+                    window.history.pushState({}, '', `${window.location.origin}/?search=${term}`);
                 })
                 .catch(error => {
                     console.log(error);
                 });
         },
-        buildSearchString() {
-            var string = `` ;
-            if (this.selectedCategory) {
-                string += `category=${this.selectedCategory}&`
-            }
-            if (this.selectedPrintMethod) {
-                string += `print_method=${this.selectedPrintMethod}&`
-            }
-            if (this.selectedColorCount) {
-                string += `color_count=${this.selectedColorCount}&`
-            }
-            return string;
-        },
+        // buildSearchString() {
+        //     var string = `` ;
+        //     if (this.selectedCategory) {
+        //         string += `category=${this.selectedCategory}&`
+        //     }
+        //     if (this.selectedPrintMethod) {
+        //         string += `print_method=${this.selectedPrintMethod}&`
+        //     }
+        //     return string;
+        // },
         clearSearch() {
-            this.selectedCategory = null;
-            this.selectedPrintMethod = null;
-            this.selectedColorCount = null;
+            this.selectedCategory = "all styles";
+            this.selectedPrintMethod = "all print methods";
             this.updateImageList();
         },
+        // closePrintMethods() {
+        //     this.printMethodsVisible = false;
+        // },
+        // closeCategories() {
+        //     this.categoriesVisible = false;
+        // }
     },
     mounted() {
-
+        this.eventHub.$on('search', this.updateImageList)
     }
 }
 </script>

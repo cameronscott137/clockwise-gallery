@@ -11,9 +11,13 @@ class ImageController extends Controller
 
     public function index(Request $request)
     {
-        $images = GalleryImage::withPrintMethod($request->print_method)
-            ->withColorCount($request->color_count)
-            ->withCategory($request->category)
+        // $images = GalleryImage::withPrintMethod($request->print_method)
+        //     ->withColorCount($request->color_count)
+        //     ->withCategory($request->category)
+        //     ->get();
+
+
+        $images = GalleryImage::withSearch($request->search)
             ->get();
 
         return view('images.index', compact('images'));
@@ -21,9 +25,13 @@ class ImageController extends Controller
 
     public function search(Request $request)
     {
-        $images = GalleryImage::withPrintMethod($request->print_method)
-            ->withColorCount($request->color_count)
-            ->withCategory($request->category)
+        // $images = GalleryImage::withPrintMethod($request->print_method)
+        //     ->withColorCount($request->color_count)
+        //     ->withCategory($request->category)
+        //     ->get();
+
+
+        $images = GalleryImage::withSearch($request->search)
             ->get();
 
         return response($images, 200);
@@ -33,6 +41,8 @@ class ImageController extends Controller
 
     public function show(GalleryImage $image)
     {
-        return view('images.show', compact($image));
+        $images = GalleryImage::excluding($image)
+            ->get();
+        return view('images.show', compact('image', 'images'));
     }
 }
