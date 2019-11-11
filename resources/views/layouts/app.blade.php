@@ -21,6 +21,27 @@
     <link rel="mask-icon" href="{{ asset('safari-pinned-tab.svg') }}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#1f1f1f">
     <meta name="theme-color" content="#ffffff">
+
+    <meta name="description" content="@yield('description', 'Clockwise is a custom apparel company that prints,
+stitches, and ships in Pittsburgh, PA.')" />
+    <link rel="canonical" href="{{ request()->url() }}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{ config('app.name') }} | @yield('title')" />
+    <meta property="og:description" content="@yield('description', 'Clockwise is a custom apparel company that prints,
+stitches, and ships in Pittsburgh, PA.')" />
+    <meta property="og:url" content="{{ request()->url() }}" />
+    <meta property="og:image" content="@yield('image', 'Clockwise is a custom apparel company that prints,
+stitches, and ships in Pittsburgh, PA.')" />
+    <meta property="og:image:alt" content="{{ config('app.name') }}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:description" content="@yield('description', 'Clockwise is a custom apparel company that prints,
+stitches, and ships in Pittsburgh, PA.')" />
+    <meta name="twitter:title" content="{{ config('app.name') }} | @yield('title')" />
+    <meta name="twitter:site" content="{{ config('app.url') }}" />
+    <meta name="twitter:image" content="@yield('image', 'Clockwise is a custom apparel company that prints,
+stitches, and ships in Pittsburgh, PA.')" />
+    <meta name="twitter:creator" content="@clockwisetees" />
+
 </head>
 
 <body class="bg-gray-100 h-screen antialiased leading-none">

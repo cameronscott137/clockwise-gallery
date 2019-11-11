@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('image', $image->image_url)
+
+@section('description', $image->name)
+
 @section('content')
 
 <div class="container mx-auto flex flex-wrap p-4 items-center mb-4 ">
