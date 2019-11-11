@@ -2054,6 +2054,9 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post("".concat(window.location.origin, "/search/?search=").concat(term)).then(function (response) {
         _this.imageArray = response.data;
+
+        _this.reInitMasonry();
+
         window.history.pushState({}, '', "".concat(window.location.origin, "/?search=").concat(term));
       })["catch"](function (error) {
         console.log(error);
@@ -2084,15 +2087,14 @@ __webpack_require__.r(__webpack_exports__);
     paginate: function paginate() {
       var _this2 = this;
 
-      this.paginationCount = this.paginationCount + 10;
-      debugger;
+      this.paginationCount = this.paginationCount + 10; // debugger;
+
       axios.post("".concat(window.location.origin, "/search?offset=").concat(this.paginationCount)).then(function (response) {
         // debugger;
         _this2.imageArray = _this2.imageArray.concat(response.data);
 
         _this2.reInitMasonry();
 
-        window.history.pushState({}, '', "".concat(window.location.origin, "/?offset=").concat(_this2.paginationCount));
         _this2.canLoadMore = true;
       })["catch"](function (error) {
         console.log(error);
@@ -22801,7 +22803,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "mb-8 px-2 w-1/2 grid-item" }, [
+  return _c("div", { staticClass: "mb-8 px-2 w-full md:w-1/2 grid-item" }, [
     _c("input", {
       ref: "clipboardInput",
       staticClass: "absolute h-0 w-0",
@@ -22861,7 +22863,7 @@ var render = function() {
           "p",
           {
             staticClass:
-              "pt-3 mb-0 text-base leading-normal font-futura text-black"
+              "pt-2 md:pt-3 mb-0 text-sm md:text-base leading-normal font-futura text-black"
           },
           [_vm._v("\n            " + _vm._s(_vm.image.name) + "\n        ")]
         )

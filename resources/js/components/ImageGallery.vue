@@ -141,6 +141,7 @@ export default {
             axios.post(`${window.location.origin}/search/?search=${term}`)
                 .then(response => {
                     this.imageArray = response.data;
+                    this.reInitMasonry();
                     window.history.pushState({}, '', `${window.location.origin}/?search=${term}`);
                 })
                 .catch(error => {
@@ -175,13 +176,12 @@ export default {
 
         paginate() {
             this.paginationCount = this.paginationCount + 10;
-            debugger;
+            // debugger;
             axios.post(`${window.location.origin}/search?offset=${this.paginationCount}`)
                 .then(response => {
                     // debugger;
                     this.imageArray = this.imageArray.concat(response.data);
                     this.reInitMasonry();
-                    window.history.pushState({}, '', `${window.location.origin}/?offset=${this.paginationCount}`);
                     this.canLoadMore = true;
                 })
                 .catch(error => {

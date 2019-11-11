@@ -11082,8 +11082,16 @@ input[type="search"] {
 
 /* fluid 5 columns */
 
-.grid-sizer {
-  width: 50%;
+@media (min-width: 768px) {
+  .grid-sizer {
+    width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-sizer {
+    width: 100%;
+  }
 }
 
 @media (min-width: 640px) {

@@ -18,6 +18,14 @@ input[type="search"] {
 }
 
 /* fluid 5 columns */
-.grid-sizer {
-    @apply w-1/2;
+@media (min-width: 768px) {
+    .grid-sizer {
+        @apply w-1/2;
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-sizer {
+        @apply w-full;
+    }
 }

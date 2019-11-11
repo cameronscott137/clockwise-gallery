@@ -19,8 +19,8 @@
     <div class="bg-gray-lighter py-6 px-4 mb-8 text-center mx-4">
         <h3 class="font-futura font-bold mb-3 text-2xl">Want Work This Good?</h3>
         <p class="font-futura text-lg mb-5">You deserve it, and we can make it.</p>
-        <div class="flex flex-wrap justify-center">
-            <a href="#" class="block text-sm tracking-wide uppercase font-futura mx-2 bg-green text-white py-2 px-6 rounded-sm">
+        <div class="sm:flex sm:flex-wrap sm:justify-center">
+            <a href="#" class="mb-4 md:mb-0 block text-sm tracking-wide uppercase font-futura mx-2 bg-green text-white py-2 px-6 rounded-sm">
                 Start Your Order
             </a>
             <a href="#" class="block text-sm tracking-wide uppercase font-futura mx-2 border border-green text-green py-2 px-6 rounded-sm">
