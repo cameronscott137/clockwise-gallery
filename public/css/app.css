@@ -11080,6 +11080,12 @@ input[type="search"] {
   max-height: 85vh;
 }
 
+/* fluid 5 columns */
+
+.grid-sizer {
+  width: 50%;
+}
+
 @media (min-width: 640px) {
   .sm\:sr-only {
     position: absolute;

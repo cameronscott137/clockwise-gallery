@@ -16,3 +16,8 @@ input[type="search"] {
 .gallery-image {
     max-height: 85vh;
 }
+
+/* fluid 5 columns */
+.grid-sizer {
+    @apply w-1/2;
+}

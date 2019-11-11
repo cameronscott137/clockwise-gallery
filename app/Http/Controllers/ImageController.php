@@ -18,6 +18,8 @@ class ImageController extends Controller
 
 
         $images = GalleryImage::withSearch($request->search)
+            ->skip($request->offset)
+            ->take(10)
             ->get();
 
         return view('images.index', compact('images'));
@@ -30,8 +32,10 @@ class ImageController extends Controller
         //     ->withCategory($request->category)
         //     ->get();
 
-
+        Log::info($request->offset);
         $images = GalleryImage::withSearch($request->search)
+            ->skip($request->offset)
+            ->take(10)
             ->get();
 
         return response($images, 200);

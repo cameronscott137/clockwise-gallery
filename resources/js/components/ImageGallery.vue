@@ -92,8 +92,11 @@
 
                 <gallery-search class="mt-12 mb-10"></gallery-search>
 
-                <div class=" flex flex-wrap -mx-2">
-                    <image-gallery-item v-for="image in imageArray" :image="image" :key="image.id"></image-gallery-item>
+                <div class="container">
+                    <div class="grid">
+                        <div class="grid-sizer"></div>
+                        <image-gallery-item v-for="image in imageArray" :image="image" :key="image.id"></image-gallery-item>
+                    </div>
                     <div v-if="imageArray.length == 0" class="text-center mx-auto">
                         <div class="border border-gray-light rounded py-6 px-12">
                             <h2 class="font-futura font-bold text-xl mb-3">Nothing in Our Gallery Matches Your Search</h2>
@@ -113,6 +116,8 @@
 </template>
 
 <script>
+import Masonry from 'masonry-layout';
+import imagesLoaded from 'imagesloaded';
 import { mixin as clickaway } from 'vue-clickaway';
 export default {
     mixins: [clickaway],
@@ -121,13 +126,69 @@ export default {
         return {
             domain: window.location.origin,
             imageArray: this.images,
-            selectedCategory: "all styles",
-            categoriesVisible: false,
-            selectedPrintMethod: "all print methods",
-            printMethodsVisible: false,
+            grid: null,
+            masonry: null,
+            paginationCount: 5,
+            canLoadMore: true
+            // selectedCategory: "all styles",
+            // categoriesVisible: false,
+            // selectedPrintMethod: "all print methods",
+            // printMethodsVisible: false,
         }
     },
     methods: {
+        updateImageList(term) {
+            axios.post(`${window.location.origin}/search/?search=${term}`)
+                .then(response => {
+                    this.imageArray = response.data;
+                    window.history.pushState({}, '', `${window.location.origin}/?search=${term}`);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+
+        initMasonry() {
+            this.grid = document.querySelector('.grid');
+            this.masonry = new Masonry( this.grid, {
+                // options
+                // set itemSelector so .grid-sizer is not used in layout
+                itemSelector: '.grid-item',
+                // use element for option
+                columnWidth: '.grid-sizer',
+                percentPosition: true
+            });
+
+            var self = this;
+            imagesLoaded(this.grid).on( 'progress', function() {
+                self.masonry.layout();
+            });
+        },
+
+        reInitMasonry() {
+            this.masonry.reloadItems();
+            var self = this;
+            imagesLoaded(this.grid).on( 'progress', function() {
+                self.masonry.layout();
+            });
+        },
+
+        paginate() {
+            this.paginationCount = this.paginationCount + 10;
+            debugger;
+            axios.post(`${window.location.origin}/search?offset=${this.paginationCount}`)
+                .then(response => {
+                    // debugger;
+                    this.imageArray = this.imageArray.concat(response.data);
+                    this.reInitMasonry();
+                    window.history.pushState({}, '', `${window.location.origin}/?offset=${this.paginationCount}`);
+                    this.canLoadMore = true;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+
         // updateCategory(category) {
         //     if (this.selectedCategory == category) {
         //         this.selectedCategory = "all styles";
@@ -144,18 +205,7 @@ export default {
         //     }
         //     this.updateImageList();
         // },
-        updateImageList(term) {
-            // var searchString = this.buildSearchString();
-            // debugger;
-            axios.post(`${window.location.origin}/search/?search=${term}`)
-                .then(response => {
-                    this.imageArray = response.data;
-                    window.history.pushState({}, '', `${window.location.origin}/?search=${term}`);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        },
+
         // buildSearchString() {
         //     var string = `` ;
         //     if (this.selectedCategory) {
@@ -166,11 +216,11 @@ export default {
         //     }
         //     return string;
         // },
-        clearSearch() {
-            this.selectedCategory = "all styles";
-            this.selectedPrintMethod = "all print methods";
-            this.updateImageList();
-        },
+        // clearSearch() {
+        //     this.selectedCategory = "all styles";
+        //     this.selectedPrintMethod = "all print methods";
+        //     this.updateImageList();
+        // },
         // closePrintMethods() {
         //     this.printMethodsVisible = false;
         // },
@@ -179,7 +229,17 @@ export default {
         // }
     },
     mounted() {
-        this.eventHub.$on('search', this.updateImageList)
+        this.eventHub.$on('search', this.updateImageList);
+        this.initMasonry();
+
+        window.onscroll = () => {
+            let documentHeight = document.documentElement["scrollHeight"] - document.documentElement["offsetHeight"];
+            if (this.canLoadMore && (documentHeight - 500 < document.documentElement.scrollTop)) {
+                this.canLoadMore = false;
+                this.paginate();
+            }
+        };
+
     }
 }
 </script>
