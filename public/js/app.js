@@ -2181,7 +2181,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['image'],
   data: function data() {
@@ -22856,17 +22855,14 @@ var render = function() {
         _vm._v(" "),
         _c("img", {
           staticClass: "w-full",
-          attrs: { src: _vm.image.image_url }
+          attrs: { src: _vm.image.small_image_url }
         }),
         _vm._v(" "),
-        _c(
-          "p",
-          {
-            staticClass:
-              "pt-2 md:pt-3 mb-0 text-sm md:text-base leading-normal font-futura text-black"
-          },
-          [_vm._v("\n            " + _vm._s(_vm.image.name) + "\n        ")]
-        )
+        _c("div", {
+          staticClass:
+            "pt-2 md:pt-3 mb-0 text-sm md:text-base leading-normal font-futura text-black",
+          domProps: { innerHTML: _vm._s(_vm.image.description) }
+        })
       ]
     )
   ])
