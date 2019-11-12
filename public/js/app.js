@@ -22814,7 +22814,7 @@ var render = function() {
       "a",
       {
         staticClass: "block rounded",
-        attrs: { href: _vm.domain + "/images/" + _vm.image.slug }
+        attrs: { href: _vm.domain + "/" + _vm.image.slug }
       },
       [
         _c(
