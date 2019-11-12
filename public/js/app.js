@@ -22807,7 +22807,7 @@ var render = function() {
       ref: "clipboardInput",
       staticClass: "absolute h-0 w-0",
       attrs: { type: "text", readonly: "" },
-      domProps: { value: _vm.domain + "/images/" + _vm.image.slug }
+      domProps: { value: _vm.domain + "/" + _vm.image.slug }
     }),
     _vm._v(" "),
     _c(
