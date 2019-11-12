@@ -13,6 +13,8 @@ use Illuminate\Support\Str;
 use Storage;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 use Intervention\Image\Facades\Image as InterventionImage;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 
 class GalleryImage extends Resource
 {
@@ -52,19 +54,39 @@ class GalleryImage extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('slug')
-                ->rules('required', 'unique:gallery_images,slug')
+            Text::make('Slug')
+                ->creationRules('required', 'unique:gallery_images,slug')
                 ->resolveUsing(function ($slug) {
                     return Str::slug($slug, '-');
                 }),
-            Text::make('name')
+            Text::make('Name')
                 ->help('This is for internal reference, and will not appear in the gallery itself.')
                 ->rules('required'),
-            Trix::make('description')
+            Trix::make('Description')
                 ->rules('required'),
+            Number::make('Number of Colors', 'num_colors')
+                ->help('If the image is a digital print, mark the number of colors as "1"')
+                ->rules('required'),
+            Select::make('Print Method')->options([
+                'screenprinting' => 'Screenprinting',
+                'embroidery' => 'Embroidery',
+                'digital' => 'Digital'
+            ])->displayUsingLabels(),
+            Select::make('Category')->options([
+                'tees' => 'Tees',
+                'hats' => 'Hats',
+                'hoodies' => 'Hoodies',
+                'zip-ups' => 'Zip-ups',
+                'polos' => 'Polos',
+                'shorts' => 'Shorts',
+                'longsleeves' => 'Longsleeves',
+                'totes' => 'Totes',
+                'beanies' => 'Beanies',
+                'vests' => 'Vests'
+            ])->displayUsingLabels(),
             Image::make(str_repeat(' ', 8), 'image_url')
                 ->disk('s3')
-                ->rules('required', 'mimes:jpeg,jpg')
+                ->creationRules('required', 'mimes:jpeg,jpg')
                 ->help('Please upload a .jpg image that is at least 1600 pixels wide. The image will be automatically be cropped to fit.')
                 ->store(function (Request $request, $model) {
                     $time = time();
@@ -97,6 +119,7 @@ class GalleryImage extends Resource
                 })->preview(function () {
                     return $this->small_image_url;
                 }),
+
         ];
     }
 
