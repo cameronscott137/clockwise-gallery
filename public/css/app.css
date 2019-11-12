@@ -11065,6 +11065,14 @@ video {
   z-index: auto;
 }
 
+a {
+  color: #0CA159;
+}
+
+a:hover {
+  color: #2f855a;
+}
+
 input:focus {
   border-color: #0CA159;
 }

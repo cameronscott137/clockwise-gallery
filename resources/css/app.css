@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+a {
+    @apply text-green;
+}
+
+a:hover {
+    @apply text-green-700;
+}
+
 input:focus {
     @apply border-green;
 }
