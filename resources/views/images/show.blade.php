@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <div class="bg-gray-lighter py-6 px-4 mb-8 text-center mx-4">
+    <div class="bg-gray-lighter py-10 px-4 mb-8 text-center mx-4">
         <h3 class="font-futura font-bold mb-3 text-2xl">Want Work This Good?</h3>
         <p class="font-futura text-lg mb-5">You deserve it, and we can make it.</p>
         <div class="sm:flex sm:flex-wrap sm:justify-center">
