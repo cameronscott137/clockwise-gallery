@@ -11,14 +11,9 @@ class ImageController extends Controller
 
     public function index(Request $request)
     {
-        // $images = GalleryImage::withPrintMethod($request->print_method)
-        //     ->withColorCount($request->color_count)
-        //     ->withCategory($request->category)
-        //     ->get();
-
-
         $images = GalleryImage::withSearch($request->search)
             ->skip($request->offset)
+            ->orderBy('created_at', 'desc')
             ->take(30)
             ->get();
 
@@ -27,13 +22,10 @@ class ImageController extends Controller
 
     public function search(Request $request)
     {
-        // $images = GalleryImage::withPrintMethod($request->print_method)
-        //     ->withColorCount($request->color_count)
-        //     ->withCategory($request->category)
-        //     ->get();
 
         $images = GalleryImage::withSearch($request->search)
             ->skip($request->offset)
+            ->orderBy('created_at', 'desc')
             ->take(10)
             ->get();
 
@@ -46,6 +38,7 @@ class ImageController extends Controller
     {
         $images = GalleryImage::excluding($image)
             ->skip($request->offset)
+            ->orderBy('created_at', 'desc')
             ->take(30)
             ->get();
 
