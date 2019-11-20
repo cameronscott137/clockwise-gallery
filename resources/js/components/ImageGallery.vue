@@ -152,10 +152,7 @@ export default {
         initMasonry() {
             this.grid = document.querySelector('.grid');
             this.masonry = new Masonry( this.grid, {
-                // options
-                // set itemSelector so .grid-sizer is not used in layout
                 itemSelector: '.grid-item',
-                // use element for option
                 columnWidth: '.grid-sizer',
                 percentPosition: true
             });
@@ -234,7 +231,7 @@ export default {
 
         window.onscroll = () => {
             let documentHeight = document.documentElement["scrollHeight"] - document.documentElement["offsetHeight"];
-            if (this.canLoadMore && (documentHeight - 500 < document.documentElement.scrollTop)) {
+            if (this.canLoadMore && (documentHeight - 750 < document.documentElement.scrollTop)) {
                 this.canLoadMore = false;
                 this.paginate();
             }
