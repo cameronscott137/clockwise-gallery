@@ -77,12 +77,14 @@ class GalleryImage extends Resource
                 'hats' => 'Hats',
                 'hoodies' => 'Hoodies',
                 'zip-ups' => 'Zip-ups',
+                'sweatshirts' => 'Sweatshirts',
                 'polos' => 'Polos',
                 'shorts' => 'Shorts',
                 'longsleeves' => 'Longsleeves',
                 'totes' => 'Totes',
                 'beanies' => 'Beanies',
-                'vests' => 'Vests'
+                'vests' => 'Vests',
+                'baby' => 'Baby'
             ])->displayUsingLabels(),
             Image::make(str_repeat(' ', 8), 'image_url')
                 ->disk('s3')
