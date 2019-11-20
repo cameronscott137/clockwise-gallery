@@ -84,7 +84,8 @@ class GalleryImage extends Resource
                 'totes' => 'Totes',
                 'beanies' => 'Beanies',
                 'vests' => 'Vests',
-                'baby' => 'Baby'
+                'baby' => 'Baby',
+                'bags' => 'Bags'
             ])->displayUsingLabels(),
             Image::make(str_repeat(' ', 8), 'image_url')
                 ->disk('s3')
