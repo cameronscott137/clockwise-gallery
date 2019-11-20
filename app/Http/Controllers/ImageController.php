@@ -20,7 +20,6 @@ class ImageController extends Controller
         $images = GalleryImage::withSearch($request->search)
             ->skip($request->offset)
             ->take(30)
-            ->inRandomOrder()
             ->get();
 
         return view('images.index', compact('images'));
@@ -33,7 +32,6 @@ class ImageController extends Controller
         //     ->withCategory($request->category)
         //     ->get();
 
-        Log::info($request->offset);
         $images = GalleryImage::withSearch($request->search)
             ->skip($request->offset)
             ->take(10)
@@ -44,11 +42,11 @@ class ImageController extends Controller
 
 
 
-    public function show(GalleryImage $image)
+    public function show(GalleryImage $image, Request $request)
     {
         $images = GalleryImage::excluding($image)
+            ->skip($request->offset)
             ->take(30)
-            ->inRandomOrder()
             ->get();
 
         return view('images.show', compact('image', 'images'));
