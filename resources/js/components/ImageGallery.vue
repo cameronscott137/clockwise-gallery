@@ -128,8 +128,8 @@ export default {
             imageArray: this.images,
             grid: null,
             masonry: null,
-            paginationCount: 5,
-            canLoadMore: true
+            paginationCount: 0,
+            canLoadMore: false
             // selectedCategory: "all styles",
             // categoriesVisible: false,
             // selectedPrintMethod: "all print methods",
@@ -138,9 +138,15 @@ export default {
     },
     methods: {
         updateImageList(term) {
+            console.log('searching');
             axios.post(`${window.location.origin}/search/?search=${term}`)
                 .then(response => {
                     this.imageArray = response.data;
+                    console.log(`Term: ${term}`);
+                    this.canLoadMore = false;
+                    if (term == "") {
+                        this.canLoadMore = true;
+                    }
                     this.reInitMasonry();
                     window.history.pushState({}, '', `${window.location.origin}/?search=${term}`);
                 })
@@ -150,6 +156,7 @@ export default {
         },
 
         initMasonry() {
+            console.log('initMasonry');
             this.grid = document.querySelector('.grid');
             this.masonry = new Masonry( this.grid, {
                 itemSelector: '.grid-item',
@@ -158,81 +165,46 @@ export default {
             });
 
             var self = this;
-            imagesLoaded(this.grid).on( 'progress', function() {
+            imagesLoaded(this.grid).on('progress', function() {
                 self.masonry.layout();
+                self.canLoadMore = true;
+                // Start here tomorrow; shouldn't load if there's a search term.
             });
         },
 
         reInitMasonry() {
+            console.log('reInitMasonry');
             this.masonry.reloadItems();
+
             var self = this;
-            imagesLoaded(this.grid).on( 'progress', function() {
+            imagesLoaded(this.grid).on('progress', function() {
                 self.masonry.layout();
             });
         },
 
         paginate() {
-            this.paginationCount = this.paginationCount + 10;
-            // debugger;
+            console.log('paginate');
+            this.canLoadMore = false;
+            this.paginationCount = this.paginationCount + 30;
+            var self = this;
             axios.post(`${window.location.origin}/search?offset=${this.paginationCount}`)
                 .then(response => {
-                    // debugger;
                     this.imageArray = this.imageArray.concat(response.data);
-                    this.reInitMasonry();
-                    this.canLoadMore = true;
+                    self.reInitMasonry();
+                    self.canLoadMore = true;
                 })
                 .catch(error => {
                     console.log(error);
                 });
         }
-
-        // updateCategory(category) {
-        //     if (this.selectedCategory == category) {
-        //         this.selectedCategory = "all styles";
-        //     } else {
-        //         this.selectedCategory = category;
-        //     }
-        //     this.updateImageList();
-        // },
-        // updatePrintMethod(printMethod) {
-        //     if (this.selectedPrintMethod == printMethod) {
-        //         this.selectedPrintMethod = "all print methods";
-        //     } else {
-        //         this.selectedPrintMethod = printMethod;
-        //     }
-        //     this.updateImageList();
-        // },
-
-        // buildSearchString() {
-        //     var string = `` ;
-        //     if (this.selectedCategory) {
-        //         string += `category=${this.selectedCategory}&`
-        //     }
-        //     if (this.selectedPrintMethod) {
-        //         string += `print_method=${this.selectedPrintMethod}&`
-        //     }
-        //     return string;
-        // },
-        // clearSearch() {
-        //     this.selectedCategory = "all styles";
-        //     this.selectedPrintMethod = "all print methods";
-        //     this.updateImageList();
-        // },
-        // closePrintMethods() {
-        //     this.printMethodsVisible = false;
-        // },
-        // closeCategories() {
-        //     this.categoriesVisible = false;
-        // }
     },
     mounted() {
         this.eventHub.$on('search', this.updateImageList);
+        console.log(`canLoadMore: ${this.canLoadMore}`);
         this.initMasonry();
-
         window.onscroll = () => {
             let documentHeight = document.documentElement["scrollHeight"] - document.documentElement["offsetHeight"];
-            if (this.canLoadMore && (documentHeight - 750 < document.documentElement.scrollTop)) {
-                this.canLoadMore = false;
+            if (this.canLoadMore == true && (documentHeight - 750 < document.documentElement.scrollTop)) {
                 this.paginate();
             }
         };
