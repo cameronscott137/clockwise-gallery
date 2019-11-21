@@ -1887,6 +1887,7 @@ __webpack_require__.r(__webpack_exports__);
     getExistingSearchTerm: function getExistingSearchTerm() {
       var urlParams = new URLSearchParams(window.location.search);
       this.term = urlParams.get('search');
+      this.eventHub.$emit('search', this.term);
     }
   },
   mounted: function mounted() {
@@ -2041,7 +2042,8 @@ __webpack_require__.r(__webpack_exports__);
       grid: null,
       masonry: null,
       paginationCount: 0,
-      canLoadMore: false // selectedCategory: "all styles",
+      canLoadMore: false,
+      searchTerm: '' // selectedCategory: "all styles",
       // categoriesVisible: false,
       // selectedPrintMethod: "all print methods",
       // printMethodsVisible: false,
@@ -2052,15 +2054,14 @@ __webpack_require__.r(__webpack_exports__);
     updateImageList: function updateImageList(term) {
       var _this = this;
 
+      this.searchTerm = term;
       console.log('searching');
       axios.post("".concat(window.location.origin, "/search/?search=").concat(term)).then(function (response) {
-        _this.imageArray = response.data;
-        console.log("Term: ".concat(term));
-        _this.canLoadMore = false;
+        _this.imageArray = response.data; // console.log(`Term: ${term}`);
+        // this.canLoadMore = false;
+        // if (term == "") {
 
-        if (term == "") {
-          _this.canLoadMore = true;
-        }
+        _this.canLoadMore = true; // }
 
         _this.reInitMasonry();
 

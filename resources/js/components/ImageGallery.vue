@@ -129,7 +129,8 @@ export default {
             grid: null,
             masonry: null,
             paginationCount: 0,
-            canLoadMore: false
+            canLoadMore: false,
+            searchTerm: ''
             // selectedCategory: "all styles",
             // categoriesVisible: false,
             // selectedPrintMethod: "all print methods",
@@ -138,15 +139,16 @@ export default {
     },
     methods: {
         updateImageList(term) {
+            this.searchTerm = term;
             console.log('searching');
             axios.post(`${window.location.origin}/search/?search=${term}`)
                 .then(response => {
                     this.imageArray = response.data;
-                    console.log(`Term: ${term}`);
-                    this.canLoadMore = false;
-                    if (term == "") {
+                    // console.log(`Term: ${term}`);
+                    // this.canLoadMore = false;
+                    // if (term == "") {
                         this.canLoadMore = true;
-                    }
+                    // }
                     this.reInitMasonry();
                     window.history.pushState({}, '', `${window.location.origin}/?search=${term}`);
                 })

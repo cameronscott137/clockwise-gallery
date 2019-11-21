@@ -26,6 +26,7 @@ export default {
         getExistingSearchTerm() {
             const urlParams = new URLSearchParams(window.location.search);
             this.term = urlParams.get('search');
+            this.eventHub.$emit('search', this.term);
         }
     },
     mounted() {
