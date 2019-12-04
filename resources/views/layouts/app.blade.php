@@ -41,6 +41,22 @@ stitches, and ships in Pittsburgh, PA.')" />
     <meta name="twitter:image" content="@yield('image', 'https://clockwiseprod.s3.amazonaws.com/media/gallery/_1573572895_sm.jpg')" />
     <meta name="twitter:creator" content="@clockwisetees" />
 
+
+    @if (auth()->guest())
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-154014147-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-154014147-1');
+        </script>
+    @endif
+
 </head>
 
 <body class="bg-gray-100 h-screen antialiased leading-none">
