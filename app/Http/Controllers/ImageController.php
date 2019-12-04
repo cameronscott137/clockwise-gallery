@@ -20,19 +20,33 @@ class ImageController extends Controller
         return view('images.index', compact('images'));
     }
 
+    public function paginate(Request $request)
+    {
+
+        $images = GalleryImage::withSearch($request->search)
+            ->offset($request->offset)
+            ->orderBy('created_at', 'desc')
+            ->take(30)
+            ->get();
+        Log::info($images->count());
+        return response([
+            'images' => $images,
+            'load_more' => ($images->count() == 30 ? true : false)
+        ], 200);
+    }
+
     public function search(Request $request)
     {
 
         $images = GalleryImage::withSearch($request->search)
-            ->skip($request->offset)
             ->orderBy('created_at', 'desc')
-            ->take(10)
             ->get();
 
-        return response($images, 200);
+        return response([
+            'images' => $images,
+            'load_more' =>  false
+        ], 200);
     }
-
-
 
     public function show(GalleryImage $image, Request $request)
     {

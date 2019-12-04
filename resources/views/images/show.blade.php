@@ -8,9 +8,9 @@
 
 @section('content')
 
-<div class="container mx-auto flex flex-wrap p-4 items-center mb-4 ">
-    <a href="{{ url('/')}}" class="block mr-10">
-        <img src="{{ asset('img/icon-logo_with_text.svg') }}">
+<div class="p-6">
+    <a href="{{ url('/')}}" class="block ">
+        <img class="mx-auto" src=" {{ asset('img/icon-logo_with_text.svg') }}">
     </a>
 </div>
 

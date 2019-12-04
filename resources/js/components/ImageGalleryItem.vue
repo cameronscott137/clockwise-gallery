@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-8 px-2 w-full md:w-1/2 grid-item">
+    <div class="mb-8 px-2 w-full md:w-1/2 grid-item" :class="`grid-item-${this.index}`">
         <input class="absolute h-0 w-0" ref="clipboardInput" type="text" :value="`${domain}/gallery/${image.slug}`" readonly>
         <a :href="`${domain}/gallery/${image.slug}`" class="block rounded">
             <div class="absolute top-0 right-0 mr-4 z-40 mt-2 bg-black opacity-50 hover:opacity-100 p-2 rounded-full cursor-pointer" @click.prevent="copyLink">
@@ -8,16 +8,18 @@
             <img class="w-full" :src="image.small_image_url">
             <div class="pt-2 md:pt-3 mb-0 text-sm md:text-base leading-normal font-futura text-black" v-html="image.description">
             </div>
+            {{ image.id }}
         </a>
     </div>
 </template>
 
 <script>
 export default {
-    props: ['image'],
+    props: ['image', 'pagination'],
     data() {
         return {
             domain: window.location.origin,
+            index: this.pagination,
         }
     },
     methods: {

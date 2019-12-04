@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'ImageController@index')->name('galleryIndex');
+Route::post('/paginate', 'ImageController@paginate')->name('galleryPaginate');
 Route::post('/search', 'ImageController@search')->name('gallerySearch');
 Route::get('/gallery/{image}', 'ImageController@show')->name('galleryShow');
 

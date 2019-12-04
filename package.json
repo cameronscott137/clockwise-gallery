@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "imagesloaded": "^4.1.4",
+        "jquery": "^3.4.1",
         "masonry-layout": "^4.2.2",
         "vue": "^2.6.10",
         "vue-clickaway": "^2.2.2",
