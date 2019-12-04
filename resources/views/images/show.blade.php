@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
+@section('title', strip_tags($image->description))
+
 @section('image', $image->image_url)
 
-@section('description', $image->name)
+@section('description', $image->description)
 
 @section('content')
 

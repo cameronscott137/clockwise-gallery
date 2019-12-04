@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'The Clockwork')
+
 @section('content')
 
 <header class="text-center mt-10 md:mt-20 px-4">

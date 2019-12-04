@@ -2057,11 +2057,13 @@ __webpack_require__.r(__webpack_exports__);
       this.searchTerm = term;
       console.log('searching');
       axios.post("".concat(window.location.origin, "/search/?search=").concat(term)).then(function (response) {
-        _this.imageArray = response.data; // console.log(`Term: ${term}`);
-        // this.canLoadMore = false;
-        // if (term == "") {
+        _this.imageArray = response.data;
+        console.log("Term: ".concat(term));
+        _this.canLoadMore = false;
 
-        _this.canLoadMore = true; // }
+        if (term == "") {
+          _this.canLoadMore = true;
+        }
 
         _this.reInitMasonry();
 

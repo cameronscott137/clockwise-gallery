@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name') }} | @yield('title')"</title>
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://use.typekit.net/vto7vtu.css">
@@ -30,16 +30,14 @@ stitches, and ships in Pittsburgh, PA.')" />
     <meta property="og:description" content="@yield('description', 'Clockwise is a custom apparel company that prints,
 stitches, and ships in Pittsburgh, PA.')" />
     <meta property="og:url" content="{{ request()->url() }}" />
-    <meta property="og:image" content="@yield('image', 'Clockwise is a custom apparel company that prints,
-stitches, and ships in Pittsburgh, PA.')" />
+    <meta property="og:image" content="@yield('image', 'https://clockwiseprod.s3.amazonaws.com/media/gallery/_1573572895_lg.jpg')" />
     <meta property="og:image:alt" content="{{ config('app.name') }}" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:description" content="@yield('description', 'Clockwise is a custom apparel company that prints,
 stitches, and ships in Pittsburgh, PA.')" />
     <meta name="twitter:title" content="{{ config('app.name') }} | @yield('title')" />
     <meta name="twitter:site" content="{{ config('app.url') }}" />
-    <meta name="twitter:image" content="@yield('image', 'Clockwise is a custom apparel company that prints,
-stitches, and ships in Pittsburgh, PA.')" />
+    <meta name="twitter:image" content="@yield('image', 'https://clockwiseprod.s3.amazonaws.com/media/gallery/_1573572895_lg.jpg')" />
     <meta name="twitter:creator" content="@clockwisetees" />
 
 </head>
