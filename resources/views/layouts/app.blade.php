@@ -43,6 +43,7 @@ stitches, and ships in Pittsburgh, PA.')" />
 </head>
 
 <body class="bg-gray-100 h-screen antialiased leading-none">
+
     <div id="app">
         @yield('content')
     </div>

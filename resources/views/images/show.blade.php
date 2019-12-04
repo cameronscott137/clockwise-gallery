@@ -2,9 +2,9 @@
 
 @section('title', strip_tags($image->description))
 
-@section('image', $image->image_url)
+@section('image', $image->large_image_url)
 
-@section('description', $image->description)
+@section('description', strip_tags($image->description))
 
 @section('content')
 
