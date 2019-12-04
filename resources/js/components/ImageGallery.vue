@@ -8,7 +8,7 @@
                     v-model="term"
                     @change="this.searchImages"
                     type="search"
-                    class="border border-gray-light rounded-full w-full py-4 pl-12 pl-8 font-futura text-lg tracking-wide focus:outline-none focus:border-green-400"
+                    class="border border-gray-light rounded-full w-full py-4 pl-12 pr-4 font-futura text-lg tracking-wide focus:outline-none focus:border-green-400"
                     placeholder="Search our catalog for terms like “screenprinting”, “foil”, or “hoodie”"
                     >
                 </div>
