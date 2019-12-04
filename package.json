@@ -26,6 +26,7 @@
         "imagesloaded": "^4.1.4",
         "jquery": "^3.4.1",
         "masonry-layout": "^4.2.2",
+        "url-search-params-polyfill": "^7.0.0",
         "vue": "^2.6.10",
         "vue-clickaway": "^2.2.2",
         "vue-toasted": "^1.1.27"
