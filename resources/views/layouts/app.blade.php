@@ -30,7 +30,7 @@ stitches, and ships in Pittsburgh, PA.')" />
     <meta property="og:description" content="@yield('description', 'Clockwise is a custom apparel company that prints,
 stitches, and ships in Pittsburgh, PA.')" />
     <meta property="og:url" content="{{ request()->url() }}" />
-    <meta property="og:image" content="@yield('image', 'https://clockwiseprod.s3.amazonaws.com/media/gallery/_1573572895_lg.jpg')" />
+    <meta property="og:image" content="@yield('image', 'https://clockwiseprod.s3.amazonaws.com/media/gallery/_1573572895_sm.jpg')" />
     <meta property="og:image:alt" content="@yield('description', 'Clockwise is a custom apparel company that prints,
 stitches, and ships in Pittsburgh, PA.')" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -38,7 +38,7 @@ stitches, and ships in Pittsburgh, PA.')" />
 stitches, and ships in Pittsburgh, PA.')" />
     <meta name="twitter:title" content="{{ config('app.name') }} | @yield('title')" />
     <meta name="twitter:site" content="{{ config('app.url') }}" />
-    <meta name="twitter:image" content="@yield('image', 'https://clockwiseprod.s3.amazonaws.com/media/gallery/_1573572895_lg.jpg')" />
+    <meta name="twitter:image" content="@yield('image', 'https://clockwiseprod.s3.amazonaws.com/media/gallery/_1573572895_sm.jpg')" />
     <meta name="twitter:creator" content="@clockwisetees" />
 
 </head>
