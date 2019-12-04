@@ -8,7 +8,6 @@
             <img class="w-full" :src="image.small_image_url">
             <div class="pt-2 md:pt-3 mb-0 text-sm md:text-base leading-normal font-futura text-black" v-html="image.description">
             </div>
-            {{ image.id }}
         </a>
     </div>
 </template>
