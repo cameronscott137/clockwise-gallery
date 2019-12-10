@@ -8,13 +8,7 @@
 
 @section('content')
 
-<div class="p-6">
-    <a href="{{ url('/')}}" class="block ">
-        <img class="mx-auto" src=" {{ asset('img/icon-logo_with_text.svg') }}">
-    </a>
-</div>
-
-<div class="container mx-auto">
+<div class="container mx-auto pt-6">
     <div class="px-4">
         <img class="w-auto mx-auto gallery-image mb-6" src="{{ $image->large_image_url }}">
         <div class="font-futura text-xl leading-normal tracking-wide text-center mb-12 max-w-lg mx-auto">

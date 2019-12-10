@@ -11102,6 +11102,20 @@ input[type="search"] {
   }
 }
 
+@media(min-width: 992px) {
+  .sub-menu {
+    background-color: #fff;
+    position: absolute;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    padding-top: 0.75rem;
+    padding-bottom: 1rem;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, .2);
+    width: 200px;
+    z-index: 9;
+  }
+}
+
 @media (min-width: 640px) {
   .sm\:sr-only {
     position: absolute;
@@ -52861,3 +52875,4 @@ input[type="search"] {
     z-index: auto;
   }
 }
+

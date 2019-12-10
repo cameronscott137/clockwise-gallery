@@ -37,3 +37,13 @@ input[type="search"] {
         @apply w-full;
     }
 }
+
+@media(min-width: 992px) {
+    .sub-menu {
+        @apply bg-white absolute px-3 pt-3 pb-4;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, .2);
+        width: 200px;
+        z-index: 9;
+    }
+}
+
