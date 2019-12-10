@@ -63,7 +63,7 @@ stitches, and ships in Pittsburgh, PA.')" />
 
     <div id="app">
 
-        <header class="container lg:flex lg:items-center lg:justify-between mx-auto px-4 py-4">
+        <header class="container lg:flex lg:items-center lg:justify-between mx-auto px-6 md:px-0 py-4">
             <div class="flex items-center w-full lg:w-auto lg:block">
                 <a href="{{ url('/') }}">
                     <img class="w-48 sm:w-64 h-auto" src="{{ asset('img/icon-logo_with_text.svg') }}" alt="Clockwise Logo">
@@ -92,7 +92,7 @@ stitches, and ships in Pittsburgh, PA.')" />
                     </nav>
                 </div>
                 <li class="m-0 md:ml-4 p-0 list-none">
-                    <a class="mb-4 md:mb-0 block text-base tracking-wide uppercase font-futura mx-2 bg-green text-white leading-none py-3 px-4 rounded" href="https://app.clockwise.io" itemprop="url" target="_blank">Order</a>
+                    <a class="mb-4 md:mb-0 block text-base tracking-wide uppercase font-futura mx-2 bg-green text-white hover:text-white leading-none py-3 px-4 rounded" href="https://app.clockwise.io" itemprop="url" target="_blank">Order</a>
                 </li>
             </div>
         </header>
