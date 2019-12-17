@@ -102,6 +102,14 @@ stitches, and ships in Pittsburgh, PA.')" />
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}"></script>
+
+    <!-- Google Analytics-->
+    @if (auth()->guest())
+        <!-- Start of HubSpot Embed Code -->
+        <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/5666570.js"></script>
+        <!-- End of HubSpot Embed Code -->
+    @endif
+
 </body>
 
 </html>
