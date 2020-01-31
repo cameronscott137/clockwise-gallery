@@ -84,10 +84,13 @@ stitches, and ships in Pittsburgh, PA.')" />
                             <a class="text-green font-futura uppercase text-base no-underline tracking-wider" href="https://gallery.clockwise.io" itemprop="url">Our Work</a>
                         </li>
                         <li class="px-3 lg:px-6 pb-3 lg:pb-0 relative list-none">
-                            <a class="text-black font-futura uppercase text-base no-underline tracking-wider" href="http://clockwise-marcomm.cscott.webfactional.com/process/" itemprop="url">Process</a>
+                            <a class="text-black font-futura uppercase text-base no-underline tracking-wider" href="https://clockwise.io/process/" itemprop="url">Process</a>
                         </li>
                         <li class="px-3 lg:px-6 pb-3 lg:pb-0 relative list-none">
-                            <a class="text-black font-futura uppercase text-base no-underline tracking-wider" href="http://clockwise-marcomm.cscott.webfactional.com/contact/" aria-current="page" itemprop="url">Contact</a>
+                            <a class="text-black font-futura uppercase text-base no-underline tracking-wider" href="https://clockwise.io/testimonials/" itemprop="url">Testimonials</a>
+                        </li>
+                        <li class="px-3 lg:px-6 pb-3 lg:pb-0 relative list-none">
+                            <a class="text-black font-futura uppercase text-base no-underline tracking-wider" href="https://clockwise.io/contact/" aria-current="page" itemprop="url">Contact</a>
                         </li>
                     </nav>
                 </div>
@@ -105,9 +108,9 @@ stitches, and ships in Pittsburgh, PA.')" />
 
     <!-- Google Analytics-->
     @if (auth()->guest())
-        <!-- Start of HubSpot Embed Code -->
-        <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/5666570.js"></script>
-        <!-- End of HubSpot Embed Code -->
+    <!-- Start of HubSpot Embed Code -->
+    <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/5666570.js"></script>
+    <!-- End of HubSpot Embed Code -->
     @endif
 
 </body>
